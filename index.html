@@ -1,0 +1,574 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Uruguay national football team: history from 1924, honours, records and the current squad.">
+<title>La Celeste</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a sky-blue masthead with the Sol de Mayo, then one long column of chapters — history as a dated timeline, then today's team and a filterable squad sheet. */
+:root{
+  --bg:#f5f8fb;
+  --surface:#ffffff;
+  --ink:#0d1b2a;
+  --muted:#51627a;
+  --line:#d8e2ec;
+  --celeste:#5aa9e6;
+  --celeste-deep:#1f6fb2;
+  --sun:#e8a317;
+  --hero-ink:#06213a;
+  --chip:#e6f1fa;
+  --win:#1d8a55;--draw:#8a7a1d;--loss:#b23a3a;
+  --f-display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --f-body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0a1622;--surface:#102131;--ink:#e7eef6;--muted:#9fb1c5;--line:#21384f;
+  --celeste:#6fb8ef;--celeste-deep:#8cc7f2;--sun:#f2b740;--hero-ink:#04182b;--chip:#16304a;
+  --win:#4cc48a;--draw:#d1bd4f;--loss:#ef7b7b;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0a1622;--surface:#102131;--ink:#e7eef6;--muted:#9fb1c5;--line:#21384f;
+  --celeste:#6fb8ef;--celeste-deep:#8cc7f2;--sun:#f2b740;--hero-ink:#04182b;--chip:#16304a;
+  --win:#4cc48a;--draw:#d1bd4f;--loss:#ef7b7b;color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1;margin:0}
+h2{font-size:clamp(2.4rem,6vw,3.6rem);font-weight:900;text-transform:uppercase;letter-spacing:.01em}
+h3{font-size:1.6rem;font-weight:800;text-transform:uppercase}
+p{margin:0}
+a{color:var(--celeste-deep)}
+:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.eyebrow{font-family:var(--f-mono);font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+/* nav */
+nav.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+nav.top .wrap{display:flex;gap:4px 20px;align-items:center;flex-wrap:wrap;padding-block:10px}
+nav.top .brand{font-family:var(--f-display);font-weight:900;font-size:1.3rem;text-transform:uppercase;margin-right:auto;color:var(--ink);text-decoration:none}
+nav.top a.l{font-size:.9rem;font-weight:600;color:var(--muted);text-decoration:none}
+nav.top a.l:hover{color:var(--celeste-deep)}
+
+/* hero */
+.hero{background:var(--celeste);color:var(--hero-ink);position:relative;overflow:hidden}
+.hero .wrap{padding-block:56px 48px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center}
+.hero .stripes{position:absolute;inset:0;background:repeating-linear-gradient(180deg,transparent 0 44px,rgba(255,255,255,.18) 44px 88px);pointer-events:none}
+.hero h1{font-size:clamp(4rem,14vw,9.5rem);font-weight:900;text-transform:uppercase;letter-spacing:-.01em;line-height:.85}
+.stars{display:flex;gap:10px;margin-bottom:18px}
+.stars svg{width:28px;height:28px}
+.hero .lede{max-width:34rem;margin-top:20px;font-size:1.1rem;font-weight:500}
+.hero .eyebrow{color:var(--hero-ink);opacity:.8}
+.sun{width:min(240px,32vw);height:auto;position:relative}
+@media (prefers-reduced-motion:no-preference){.sun .rays{transform-origin:100px 100px;animation:spin 90s linear infinite}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.facts{display:flex;flex-wrap:wrap;gap:10px 28px;margin-top:28px;font-family:var(--f-mono);font-size:.85rem}
+.facts b{display:block;font-family:var(--f-display);font-size:2rem;line-height:1;font-weight:900}
+
+section{padding-block:72px 24px}
+.sec-head{display:grid;gap:12px;margin-bottom:36px;max-width:44rem}
+.sec-head p{color:var(--muted);font-size:1.05rem}
+
+/* timeline */
+.timeline{list-style:none;margin:0;padding:0;border-left:3px solid var(--celeste);margin-left:6px}
+.timeline>li{position:relative;padding:0 0 40px 28px;display:grid;grid-template-columns:110px 1fr;gap:6px 24px}
+.timeline>li::before{content:"";position:absolute;left:-9px;top:6px;width:15px;height:15px;border-radius:50%;background:var(--bg);border:3px solid var(--celeste-deep)}
+.timeline>li.star::before{background:var(--sun);border-color:var(--sun)}
+.yr{font-family:var(--f-display);font-size:2.2rem;font-weight:900;line-height:1;color:var(--celeste-deep);font-variant-numeric:tabular-nums}
+.tl-body{min-width:0;display:grid;gap:8px;max-width:40rem}
+.tl-body h3{font-size:1.35rem}
+.tl-body p{color:var(--ink)}
+.score{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:.82rem;background:var(--chip);padding:3px 10px;border-radius:4px;width:fit-content}
+.era{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);grid-column:1/-1;padding-top:8px}
+.timeline>li.era-row{padding-bottom:16px}
+.timeline>li.era-row::before{display:none}
+
+/* honours */
+.honours{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px}
+.hon{background:var(--surface);border:1px solid var(--line);padding:22px;display:grid;gap:10px;align-content:start}
+.hon .n{font-family:var(--f-display);font-size:3.4rem;font-weight:900;line-height:.9;color:var(--celeste-deep)}
+.years{display:flex;flex-wrap:wrap;gap:6px}
+.years span{font-family:var(--f-mono);font-size:.78rem;padding:2px 8px;border:1px solid var(--line);border-radius:3px;font-variant-numeric:tabular-nums}
+.years span.post{background:var(--chip);border-color:transparent}
+.note{font-size:.85rem;color:var(--muted)}
+
+/* records */
+.recs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:20px;margin-top:20px}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line)}
+th{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
+td.num{text-align:right;font-family:var(--f-mono);font-weight:600}
+.tbox{background:var(--surface);border:1px solid var(--line);padding:18px;overflow-x:auto}
+.tbox h3{font-size:1.2rem;margin-bottom:8px}
+
+/* today */
+.today{display:grid;grid-template-columns:1.1fr 1fr;gap:20px}
+@media (max-width:760px){.today{grid-template-columns:1fr}.hero .wrap{grid-template-columns:1fr}.sun{width:140px;order:-1}}
+.panel{background:var(--surface);border:1px solid var(--line);padding:22px;display:grid;gap:12px;align-content:start;min-width:0}
+.match{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.match:last-child{border-bottom:0}
+.res{font-family:var(--f-mono);font-weight:600;font-size:.75rem;width:28px;height:28px;display:grid;place-items:center;border-radius:4px;color:#fff}
+.res.W{background:var(--win)}.res.D{background:var(--draw)}.res.L{background:var(--loss)}.res.U{background:var(--muted)}
+.match .m-t{min-width:0}
+.match .m-t b{display:block;font-weight:600}
+.match .m-t span{font-size:.82rem;color:var(--muted)}
+.match .sc{font-family:var(--f-mono);font-weight:600;font-variant-numeric:tabular-nums}
+
+/* squad */
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.filters button{font:600 .88rem var(--f-body);padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--celeste-deep);border-color:var(--celeste-deep);color:var(--bg)}
+.pos-group{margin-bottom:28px}
+.pos-group h3{display:flex;align-items:baseline;gap:12px;font-size:1.4rem;margin-bottom:12px;border-bottom:2px solid var(--ink);padding-bottom:6px}
+.pos-group h3 small{font-family:var(--f-mono);font-size:.75rem;color:var(--muted);font-weight:400;letter-spacing:.08em}
+.players{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr));gap:10px}
+.pl{background:var(--surface);border:1px solid var(--line);padding:12px 14px;display:grid;grid-template-columns:52px 1fr;gap:12px;align-items:center}
+.pl .shirt{width:52px;height:52px;display:block}
+.pl .pos{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.08em;color:var(--celeste-deep);font-weight:600}
+.pl .code{font-family:var(--f-mono);font-size:.7rem;font-weight:600;letter-spacing:.06em;color:var(--celeste-deep);background:var(--chip);height:40px;display:grid;place-items:center;border-radius:3px}
+.pl b{display:block;font-weight:600;line-height:1.25}
+.pl span{font-size:.8rem;color:var(--muted)}
+.pl .tag{display:inline-block;font-family:var(--f-mono);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--sun);font-weight:600}
+.out{margin-top:8px;display:grid;gap:6px}
+
+footer{margin-top:64px;border-top:1px solid var(--line)}
+footer .wrap{padding-block:28px 40px;display:grid;gap:10px;font-size:.85rem;color:var(--muted)}
+footer ul{margin:0;padding-left:18px}
+
+@media (max-width:560px){
+  .timeline>li{grid-template-columns:1fr;padding-left:22px}
+  .yr{font-size:1.8rem}
+  nav.top a.l{font-size:.82rem}
+}
+</style>
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+
+<nav class="top" aria-label="Sections">
+  <div class="wrap">
+    <a class="brand" href="#top">La Celeste</a>
+    <a class="l" href="#history">History</a>
+    <a class="l" href="#honours">Honours</a>
+    <a class="l" href="#today">Today</a>
+    <a class="l" href="#squad">Squad</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="stripes" aria-hidden="true"></div>
+  <div class="wrap">
+    <div>
+      <div class="stars" aria-label="Four stars on the shirt">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>
+      </div>
+      <p class="eyebrow">Selección Uruguaya de Fútbol · since 1901</p>
+      <h1>La<br>Celeste</h1>
+      <p class="lede">A nation of three and a half million people that won the first World Cup, silenced the Maracanã and still carries four stars on its shirt. This is Uruguay's story from Paris 1924 to the squad of today.</p>
+      <div class="facts">
+        <div><b>2</b>World Cups</div>
+        <div><b>2</b>Olympic golds</div>
+        <div><b>15</b>Copa Américas</div>
+        <div><b>15</b>World Cups played</div>
+      </div>
+    </div>
+    <svg class="sun" viewBox="0 0 200 200" role="img" aria-label="Sol de Mayo, the sun from Uruguay's flag, with eight straight and eight wavy rays">
+      <defs>
+        <path id="ray-straight" d="M100 3 L107.5 58 L92.5 58 Z"/>
+        <path id="ray-wavy" d="M92 58 C84 48 99 42 93 32 C87 22 101 15 100 3 C104 15 96 23 104 32 C111 42 98 48 108 58 Z"/>
+      </defs>
+      <g class="rays" fill="#fcd116" stroke="#7b3f00" stroke-width="1.6" stroke-linejoin="round">
+        <use href="#ray-straight"/>
+        <use href="#ray-straight" transform="rotate(45 100 100)"/>
+        <use href="#ray-straight" transform="rotate(90 100 100)"/>
+        <use href="#ray-straight" transform="rotate(135 100 100)"/>
+        <use href="#ray-straight" transform="rotate(180 100 100)"/>
+        <use href="#ray-straight" transform="rotate(225 100 100)"/>
+        <use href="#ray-straight" transform="rotate(270 100 100)"/>
+        <use href="#ray-straight" transform="rotate(315 100 100)"/>
+        <use href="#ray-wavy" transform="rotate(22.5 100 100)"/>
+        <use href="#ray-wavy" transform="rotate(67.5 100 100)"/>
+        <use href="#ray-wavy" transform="rotate(112.5 100 100)"/>
+        <use href="#ray-wavy" transform="rotate(157.5 100 100)"/>
+        <use href="#ray-wavy" transform="rotate(202.5 100 100)"/>
+        <use href="#ray-wavy" transform="rotate(247.5 100 100)"/>
+        <use href="#ray-wavy" transform="rotate(292.5 100 100)"/>
+        <use href="#ray-wavy" transform="rotate(337.5 100 100)"/>
+      </g>
+      <circle cx="100" cy="100" r="44" fill="#fcd116" stroke="#7b3f00" stroke-width="2"/>
+      <g fill="none" stroke="#7b3f00" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M74 86 Q83 79 92 85"/>
+        <path d="M108 85 Q117 79 126 86"/>
+        <path d="M76 94 Q84 89 91 94 Q84 98 76 94 Z"/>
+        <path d="M109 94 Q116 89 124 94 Q116 98 109 94 Z"/>
+        <path d="M100 90 L97 110 Q100 113 104 110"/>
+        <path d="M88 121 Q100 129 112 121"/>
+        <path d="M91 121 Q100 117 109 121"/>
+      </g>
+      <g fill="#7b3f00">
+        <circle cx="84" cy="94" r="2.6"/><circle cx="116.5" cy="94" r="2.6"/>
+      </g>
+    </svg>
+  </div>
+</header>
+
+<main>
+<section id="history">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Chapter one</p>
+      <h2>A century of the sky-blue shirt</h2>
+      <p>Uruguay arrived in Europe in 1924 as unknowns and left as the best team in the world. Here are the moments that built the legend, from that first trip to Paris up to 2026.</p>
+    </div>
+
+    <ol class="timeline">
+      <li class="era-row"><span class="era">The golden age · 1924–1950</span></li>
+      <li class="star">
+        <span class="yr">1924</span>
+        <div class="tl-body">
+          <h3>Olympic gold in Paris</h3>
+          <p>In their first tournament outside South America, Uruguay won all five matches in Paris and beat Switzerland in the final. José Leandro Andrade, Héctor Scarone and Pedro Petrone made Europe take notice. After the final the players ran a lap of the pitch to salute the crowd, and that became the first <em>vuelta olímpica</em>.</p>
+          <span class="score">Final · Uruguay 3–0 Switzerland</span>
+        </div>
+      </li>
+      <li class="star">
+        <span class="yr">1928</span>
+        <div class="tl-body">
+          <h3>Gold again in Amsterdam</h3>
+          <p>Uruguay retained the Olympic title after beating Argentina in a replayed final. FIFA treated these Olympic tournaments as world championships, which is why Uruguay counts four stars on its shirt instead of two.</p>
+          <span class="score">Final replay · Uruguay 2–1 Argentina</span>
+        </div>
+      </li>
+      <li class="star">
+        <span class="yr">1930</span>
+        <div class="tl-body">
+          <h3>Host and champion of the first World Cup</h3>
+          <p>Montevideo hosted the first FIFA World Cup to mark one hundred years of Uruguay's first constitution. The Estadio Centenario was built for it. Uruguay came back from 2–1 down at half-time to beat Argentina in the final, with José Nasazzi as captain.</p>
+          <span class="score">Final · Uruguay 4–2 Argentina</span>
+        </div>
+      </li>
+      <li>
+        <span class="yr">1934–38</span>
+        <div class="tl-body">
+          <h3>The boycott years</h3>
+          <p>Uruguay refused to travel to Italy in 1934, partly because few European nations had come to Montevideo in 1930. They stayed away from France in 1938 too. In between they kept winning in South America, taking the 1935 and 1942 Copa América titles.</p>
+        </div>
+      </li>
+      <li class="star">
+        <span class="yr">1950</span>
+        <div class="tl-body">
+          <h3>The Maracanazo</h3>
+          <p>In the deciding match of the World Cup in Brazil, about 200,000 people packed the Maracanã expecting a home win. Friaça put Brazil ahead, then Juan Alberto Schiaffino equalised and Alcides Ghiggia scored the winner. Captain Obdulio Varela led the team through it. It is still one of the biggest upsets in football.</p>
+          <span class="score">Final round · Brazil 1–2 Uruguay</span>
+        </div>
+      </li>
+
+      <li class="era-row"><span class="era">Contenders and long waits · 1954–2006</span></li>
+      <li>
+        <span class="yr">1954</span>
+        <div class="tl-body">
+          <h3>Unbeaten until the semi-final</h3>
+          <p>Uruguay beat Scotland 7–0 and England 4–2 in Switzerland. Their first ever World Cup defeat came in a 4–2 extra-time semi-final loss to Hungary's Golden Team. They finished fourth.</p>
+        </div>
+      </li>
+      <li>
+        <span class="yr">1970</span>
+        <div class="tl-body">
+          <h3>Fourth in Mexico</h3>
+          <p>With Ladislao Mazurkiewicz in goal, Uruguay reached the semi-finals again and lost to Pelé's Brazil. Fourth place was their best World Cup finish for forty years.</p>
+        </div>
+      </li>
+      <li>
+        <span class="yr">1980–81</span>
+        <div class="tl-body">
+          <h3>The Mundialito</h3>
+          <p>Uruguay hosted the Copa de Oro, a tournament of former world champions held to mark fifty years since 1930. They won it, beating Brazil 2–1 in the final at the Centenario.</p>
+        </div>
+      </li>
+      <li>
+        <span class="yr">1983–95</span>
+        <div class="tl-body">
+          <h3>Three more Copa Américas</h3>
+          <p>Enzo Francescoli led Uruguay to the Copa América titles of 1983, 1987 and 1995. The 1995 title was won at home, on penalties against Brazil.</p>
+        </div>
+      </li>
+      <li>
+        <span class="yr">2002</span>
+        <div class="tl-body">
+          <h3>A comeback in Korea and Japan</h3>
+          <p>Uruguay returned to the World Cup after missing two editions. A 3–3 draw with Senegal, after trailing 3–0, was not enough to get out of the group.</p>
+        </div>
+      </li>
+
+      <li class="era-row"><span class="era">The Tabárez revival · 2006–2021</span></li>
+      <li class="star">
+        <span class="yr">2010</span>
+        <div class="tl-body">
+          <h3>Semi-finals in South Africa</h3>
+          <p>Óscar Washington Tabárez returned in 2006 and rebuilt the team. In 2010 Uruguay reached the semi-finals for the first time since 1970. Luis Suárez's goal-line handball against Ghana and Sebastián Abreu's chipped penalty in the shootout became famous. Diego Forlán won the Golden Ball as the tournament's best player.</p>
+          <span class="score">Finished 4th</span>
+        </div>
+      </li>
+      <li class="star">
+        <span class="yr">2011</span>
+        <div class="tl-body">
+          <h3>Copa América number fifteen</h3>
+          <p>In Argentina, Uruguay knocked out the hosts on penalties and beat Paraguay 3–0 in the final. Suárez was named player of the tournament. The win made Uruguay the most successful team in Copa América history at the time.</p>
+          <span class="score">Final · Uruguay 3–0 Paraguay</span>
+        </div>
+      </li>
+      <li>
+        <span class="yr">2014–18</span>
+        <div class="tl-body">
+          <h3>Suárez, Cavani and Godín</h3>
+          <p>Uruguay beat England and Italy to reach the last 16 in Brazil in 2014. In Russia 2018 they won all three group games and beat Portugal before losing to France in the quarter-finals. Tabárez left in 2021 after fifteen years in charge.</p>
+        </div>
+      </li>
+
+      <li class="era-row"><span class="era">A new generation · 2022–today</span></li>
+      <li>
+        <span class="yr">2022</span>
+        <div class="tl-body">
+          <h3>Out on goals scored in Qatar</h3>
+          <p>Under Diego Alonso, Uruguay beat Ghana 2–0 but went out of the group behind South Korea on goals scored. It was the last World Cup for Suárez, Cavani and Godín.</p>
+        </div>
+      </li>
+      <li>
+        <span class="yr">2023–24</span>
+        <div class="tl-body">
+          <h3>Bielsa arrives</h3>
+          <p>Marcelo Bielsa was appointed in 2023. His high-pressing team beat Brazil and Argentina in qualifying. At the 2024 Copa América in the United States, Uruguay knocked out Brazil on penalties and finished third.</p>
+        </div>
+      </li>
+      <li>
+        <span class="yr">2026</span>
+        <div class="tl-body">
+          <h3>Early exit in North America</h3>
+          <p>Uruguay were drawn in Group H with Spain, Saudi Arabia and Cape Verde. They drew twice and lost 1–0 to Spain in Guadalajara on 26 June, going out without a win. It was their earliest exit since 2002, and Bielsa resigned. Diego Forlán was named interim coach in July.</p>
+          <span class="score">Group H · W0 D2 L1</span>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section id="honours">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Chapter two</p>
+      <h2>Honours &amp; records</h2>
+      <p>The trophy cabinet of a small country with a big footballing past. Years shaded blue are from 1924 onwards.</p>
+    </div>
+    <div class="honours">
+      <div class="hon">
+        <p class="eyebrow">FIFA World Cup</p>
+        <span class="n">2</span>
+        <div class="years"><span class="post">1930</span><span class="post">1950</span></div>
+        <p class="note">Also 4th place in 1954, 1970 and 2010.</p>
+      </div>
+      <div class="hon">
+        <p class="eyebrow">Olympic football</p>
+        <span class="n">2</span>
+        <div class="years"><span class="post">1924</span><span class="post">1928</span></div>
+        <p class="note">Recognised by FIFA as world championships, so they add two stars above the crest.</p>
+      </div>
+      <div class="hon">
+        <p class="eyebrow">Copa América</p>
+        <span class="n">15</span>
+        <div class="years">
+          <span>1916</span><span>1917</span><span>1920</span><span>1923</span>
+          <span class="post">1924</span><span class="post">1926</span><span class="post">1935</span><span class="post">1942</span>
+          <span class="post">1956</span><span class="post">1959</span><span class="post">1967</span><span class="post">1983</span>
+          <span class="post">1987</span><span class="post">1995</span><span class="post">2011</span>
+        </div>
+        <p class="note">Includes the 1959 extra tournament held in Ecuador.</p>
+      </div>
+    </div>
+
+    <div class="recs">
+      <div class="tbox">
+        <h3>All-time top scorers</h3>
+        <table>
+          <thead><tr><th>Player</th><th>Years</th><th style="text-align:right">Goals</th></tr></thead>
+          <tbody>
+            <tr><td>Luis Suárez</td><td>2007–2024</td><td class="num">69</td></tr>
+            <tr><td>Edinson Cavani</td><td>2008–2022</td><td class="num">58</td></tr>
+            <tr><td>Diego Forlán</td><td>2002–2014</td><td class="num">36</td></tr>
+            <tr><td>Héctor Scarone</td><td>1917–1930</td><td class="num">31</td></tr>
+            <tr><td>Ángel Romano</td><td>1911–1927</td><td class="num">28</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tbox">
+        <h3>Most appearances</h3>
+        <table>
+          <thead><tr><th>Player</th><th>Years</th><th style="text-align:right">Caps</th></tr></thead>
+          <tbody>
+            <tr><td>Diego Godín</td><td>2005–2022</td><td class="num">161</td></tr>
+            <tr><td>Luis Suárez</td><td>2007–2024</td><td class="num">143</td></tr>
+            <tr><td>Edinson Cavani</td><td>2008–2022</td><td class="num">136</td></tr>
+          </tbody>
+        </table>
+        <p class="note" style="margin-top:10px">Fernando Muslera, the long-time goalkeeper, also passed 130 caps and played at the 2026 World Cup.</p>
+      </div>
+      <div class="tbox">
+        <h3>Home ground</h3>
+        <p><b>Estadio Centenario</b>, Montevideo. Built for the 1930 World Cup and named after the centenary of the constitution. FIFA has called it a historic monument of world football. Its Torre de los Homenajes is one of the best-known sights in the city.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="today">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Chapter three</p>
+      <h2>The team today</h2>
+      <p>After the 2026 World Cup, Uruguay began rebuilding under one of the heroes of 2010. These are the latest results and news as of November 2026.</p>
+    </div>
+    <div class="today">
+      <div class="panel">
+        <p class="eyebrow">Head coach (interim)</p>
+        <h3>Diego Forlán</h3>
+        <p>The 2010 Golden Ball winner and Uruguay's third-highest scorer took charge in summer 2026 after Marcelo Bielsa resigned. His contract as interim coach runs to March 2027, and he also coaches the Under-20 team ahead of the 2027 South American U-20 Championship. Before this, he coached Peñarol in 2020 and Atenas in 2021.</p>
+        <p class="note">The federation (AUF) has not yet named a permanent coach.</p>
+      </div>
+      <div class="panel">
+        <p class="eyebrow">Recent matches</p>
+        <div class="match">
+          <span class="res L" aria-label="Loss">L</span>
+          <div class="m-t"><b>Spain v Uruguay</b><span>World Cup, Group H · 26 Jun 2026 · Guadalajara</span></div>
+          <span class="sc">1–0</span>
+        </div>
+        <div class="match">
+          <span class="res W" aria-label="Win">W</span>
+          <div class="m-t"><b>Argentina v Uruguay</b><span>Friendly · 13 Nov 2026 · La Bombonera. Balerdi own goal, Maxi Araújo</span></div>
+          <span class="sc">1–2</span>
+        </div>
+        <div class="match">
+          <span class="res U" aria-label="Result not listed">?</span>
+          <div class="m-t"><b>Uruguay v Dominican Republic</b><span>Friendly · 17 Nov 2026 · Maldonado</span></div>
+          <span class="sc">TBC</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="squad">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Chapter four</p>
+      <h2>The squad</h2>
+      <p>The 28 players Diego Forlán called up on 6 November 2026 for the friendlies against Argentina and the Dominican Republic. Each shirt shows the number the player wore against Argentina on 13 November. A dash means he wasn't in that matchday squad. Filter by position below.</p>
+    </div>
+    <div class="filters" role="group" aria-label="Filter by position">
+      <button type="button" id="f-all" data-f="all" aria-pressed="true">All 28</button>
+      <button type="button" id="f-gk" data-f="GK" aria-pressed="false">Goalkeepers</button>
+      <button type="button" id="f-df" data-f="DF" aria-pressed="false">Defenders</button>
+      <button type="button" id="f-mf" data-f="MF" aria-pressed="false">Midfielders</button>
+      <button type="button" id="f-fw" data-f="FW" aria-pressed="false">Forwards</button>
+    </div>
+    <div id="squad-list"></div>
+
+    <div class="panel" style="margin-top:8px">
+      <p class="eyebrow">Not in this squad</p>
+      <div class="out">
+        <p><b>Injured:</b> Manuel Ugarte, Nahitan Nández and Brian Rodríguez.</p>
+        <p><b>Club duty:</b> Miguel Merentiel stayed with Boca Juniors for the Copa Sudamericana final on 21 November.</p>
+        <p><b>Retired from the national team:</b> Luis Suárez, Edinson Cavani and Diego Godín.</p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Facts current to 21 November 2026. Squad and match details come from news reports by La Nación, beIN Sports, Infobae and other outlets. Clubs are left out because players change teams often.</p>
+  </div>
+</footer>
+
+<script>
+const squad = [
+  ["GK","Cristopher Fiermarín",""],
+  ["GK","Ignacio de Arruabarrena",""],
+  ["GK","Sebastián Jaume","First call-up"],
+  ["GK","Santiago Mele",""],
+  ["DF","Guillermo Varela",""],
+  ["DF","Santiago Mouriño",""],
+  ["DF","Sebastián Cáceres",""],
+  ["DF","Ronald Araújo","Centre-back"],
+  ["DF","José María Giménez","Centre-back, veteran leader"],
+  ["DF","Mathías Olivera",""],
+  ["DF","Juan Rodríguez",""],
+  ["DF","Joaquín Piquerez","Left-back"],
+  ["DF","Juan Manuel Sanabria",""],
+  ["MF","Rodrigo Bentancur",""],
+  ["MF","Facundo Bernal",""],
+  ["MF","Lucas Torreira",""],
+  ["MF","Nicolás de la Cruz",""],
+  ["MF","Federico Valverde","Star midfielder, back from injury"],
+  ["MF","Rodrigo Zalazar",""],
+  ["MF","Giorgian de Arrascaeta","Playmaker"],
+  ["MF","Agustín Canobbio",""],
+  ["FW","Facundo Pellistri",""],
+  ["FW","Maximiliano Araújo","Scored at La Bombonera"],
+  ["FW","Martín Satriano",""],
+  ["FW","Rodrigo Aguirre",""],
+  ["FW","Federico Viñas",""],
+  ["FW","Bruno Damiani","First call-up"],
+  ["FW","Darwin Núñez","Centre-forward"]
+];
+const names = {GK:"Goalkeepers",DF:"Defenders",MF:"Midfielders",FW:"Forwards"};
+// Shirt numbers worn v Argentina, 13 Nov 2026 (ESPN / Sky Sports / Footyroom line-ups). Players not in that matchday squad had no number.
+const numbers = {"Santiago Mele":1,"José María Giménez":2,"Sebastián Cáceres":3,"Ronald Araújo":4,"Facundo Bernal":5,"Rodrigo Bentancur":6,"Nicolás de la Cruz":7,"Federico Valverde":8,"Darwin Núñez":9,"Giorgian de Arrascaeta":10,"Facundo Pellistri":11,"Guillermo Varela":13,"Lucas Torreira":14,"Santiago Mouriño":15,"Mathías Olivera":16,"Rodrigo Zalazar":17,"Rodrigo Aguirre":18,"Agustín Canobbio":19,"Maximiliano Araújo":20,"Federico Viñas":21,"Joaquín Piquerez":22,"Cristopher Fiermarín":23,"Juan Manuel Sanabria":25,"Martín Satriano":26};
+const list = document.getElementById("squad-list");
+function render(f){
+  list.innerHTML = "";
+  Object.keys(names).filter(p => f==="all" || p===f).forEach(p => {
+    const ps = squad.filter(s => s[0]===p);
+    const g = document.createElement("div");
+    g.className = "pos-group";
+    g.innerHTML = `<h3>${names[p]} <small>${ps.length} PLAYERS</small></h3>`;
+    const grid = document.createElement("div");
+    grid.className = "players";
+    ps.sort((a,b) => (numbers[a[1]] ?? 99) - (numbers[b[1]] ?? 99));
+    ps.forEach(([pos,name,note]) => {
+      const el = document.createElement("div");
+      el.className = "pl";
+      const isNew = note === "First call-up";
+      const num = numbers[name];
+      const ini = num ?? "–";
+      const gk = pos === "GK";
+      const shirt = `<svg class="shirt" viewBox="0 0 52 52" aria-hidden="true"><path d="M17 5 L9 9 L2 18 L9 24 L12 21 L12 48 L40 48 L40 21 L43 24 L50 18 L43 9 L35 5 Q26 12 17 5 Z" fill="${gk ? '#2b2b2b' : '#5aa9e6'}" stroke="${gk ? '#111' : '#1f6fb2'}" stroke-width="1.5" stroke-linejoin="round"/><path d="M17 5 Q26 12 35 5" fill="none" stroke="${gk ? '#fcd116' : '#ffffff'}" stroke-width="2.5"/><text x="26" y="35" text-anchor="middle" font-family="Big Shoulders Display, Arial Narrow, sans-serif" font-weight="900" font-size="${num ? 19 : 17}" fill="${gk ? '#fcd116' : '#ffffff'}">${ini}</text></svg>`;
+      el.innerHTML = `${shirt}<div><span class="pos">${names[pos].slice(0,-1).toUpperCase()}</span><b>${name}</b>${isNew ? '<span class="tag">New</span>' : (note ? `<span>${note}</span>` : '')}</div>`;
+      grid.appendChild(el);
+    });
+    g.appendChild(grid);
+    list.appendChild(g);
+  });
+}
+let current = "all";
+try { const s = localStorage.getItem("celeste-filter"); if (s && (s==="all" || names[s])) current = s; } catch(e){}
+document.querySelectorAll(".filters button").forEach(b => {
+  b.setAttribute("aria-pressed", b.dataset.f===current ? "true" : "false");
+  b.addEventListener("click", () => {
+    current = b.dataset.f;
+    document.querySelectorAll(".filters button").forEach(x => x.setAttribute("aria-pressed", x===b ? "true" : "false"));
+    render(current);
+    try { localStorage.setItem("celeste-filter", current); } catch(e){}
+  });
+});
+render(current);
+</script>
+</body>
+</html>
