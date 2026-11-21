@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Uruguay national football team: history from 1924, honours, records and the current squad.">
+<meta name="description" content="Uruguay national football team: history from 1924, honours, records and the current squad. In English and Spanish.">
 <title>La Celeste</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
-/* Layout: a sky-blue masthead with the Sol de Mayo, then one long column of chapters — history as a dated timeline, then today's team and a filterable squad sheet. */
+/* Layout: a sky-blue masthead with the Sol de Mayo, then one long column of chapters — history as a dated timeline, then today's team and a filterable squad sheet. English/Spanish via .en/.es blocks toggled by a class on :root. */
 :root{
   --bg:#f5f8fb;
   --surface:#ffffff;
@@ -30,11 +30,15 @@
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#0a1622;--surface:#102131;--ink:#e7eef6;--muted:#9fb1c5;--line:#21384f;
   --celeste:#6fb8ef;--celeste-deep:#8cc7f2;--sun:#f2b740;--hero-ink:#04182b;--chip:#16304a;
-  --win:#4cc48a;--draw:#d1bd4f;--loss:#ef7b7b;color-scheme:dark}}
+  --win:#3fae78;--draw:#b8a43c;--loss:#d35f5f;color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0a1622;--surface:#102131;--ink:#e7eef6;--muted:#9fb1c5;--line:#21384f;
   --celeste:#6fb8ef;--celeste-deep:#8cc7f2;--sun:#f2b740;--hero-ink:#04182b;--chip:#16304a;
-  --win:#4cc48a;--draw:#d1bd4f;--loss:#ef7b7b;color-scheme:dark}
+  --win:#3fae78;--draw:#b8a43c;--loss:#d35f5f;color-scheme:dark}
+
+/* language switching */
+:root:not(.lang-es) .es{display:none!important}
+:root.lang-es .en{display:none!important}
 
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6}
@@ -54,6 +58,9 @@ nav.top .wrap{display:flex;gap:4px 20px;align-items:center;flex-wrap:wrap;paddin
 nav.top .brand{font-family:var(--f-display);font-weight:900;font-size:1.3rem;text-transform:uppercase;margin-right:auto;color:var(--ink);text-decoration:none}
 nav.top a.l{font-size:.9rem;font-weight:600;color:var(--muted);text-decoration:none}
 nav.top a.l:hover{color:var(--celeste-deep)}
+.lang{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.lang button{font:600 .78rem var(--f-mono);letter-spacing:.08em;padding:5px 10px;border:0;background:transparent;color:var(--muted);cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--celeste-deep);color:var(--bg)}
 
 /* hero */
 .hero{background:var(--celeste);color:var(--hero-ink);position:relative;overflow:hidden}
@@ -82,7 +89,6 @@ section{padding-block:72px 24px}
 .yr{font-family:var(--f-display);font-size:2.2rem;font-weight:900;line-height:1;color:var(--celeste-deep);font-variant-numeric:tabular-nums}
 .tl-body{min-width:0;display:grid;gap:8px;max-width:40rem}
 .tl-body h3{font-size:1.35rem}
-.tl-body p{color:var(--ink)}
 .score{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:.82rem;background:var(--chip);padding:3px 10px;border-radius:4px;width:fit-content}
 .era{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);grid-column:1/-1;padding-top:8px}
 .timeline>li.era-row{padding-bottom:16px}
@@ -102,7 +108,8 @@ section{padding-block:72px 24px}
 table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
 th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line)}
 th{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
-td.num{text-align:right;font-family:var(--f-mono);font-weight:600}
+td.num,th.num{text-align:right}
+td.num{font-family:var(--f-mono);font-weight:600}
 .tbox{background:var(--surface);border:1px solid var(--line);padding:18px;overflow-x:auto}
 .tbox h3{font-size:1.2rem;margin-bottom:8px}
 
@@ -113,7 +120,7 @@ td.num{text-align:right;font-family:var(--f-mono);font-weight:600}
 .match{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
 .match:last-child{border-bottom:0}
 .res{font-family:var(--f-mono);font-weight:600;font-size:.75rem;width:28px;height:28px;display:grid;place-items:center;border-radius:4px;color:#fff}
-.res.W{background:var(--win)}.res.D{background:var(--draw)}.res.L{background:var(--loss)}.res.U{background:var(--muted)}
+.res.W{background:var(--win)}.res.D{background:var(--draw)}.res.L{background:var(--loss)}
 .match .m-t{min-width:0}
 .match .m-t b{display:block;font-weight:600}
 .match .m-t span{font-size:.82rem;color:var(--muted)}
@@ -126,19 +133,20 @@ td.num{text-align:right;font-family:var(--f-mono);font-weight:600}
 .pos-group{margin-bottom:28px}
 .pos-group h3{display:flex;align-items:baseline;gap:12px;font-size:1.4rem;margin-bottom:12px;border-bottom:2px solid var(--ink);padding-bottom:6px}
 .pos-group h3 small{font-family:var(--f-mono);font-size:.75rem;color:var(--muted);font-weight:400;letter-spacing:.08em}
-.players{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr));gap:10px}
-.pl{background:var(--surface);border:1px solid var(--line);padding:12px 14px;display:grid;grid-template-columns:52px 1fr;gap:12px;align-items:center}
-.pl .shirt{width:52px;height:52px;display:block}
+.players{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:12px}
+.pl{background:var(--surface);border:1px solid var(--line);padding:14px 16px;display:grid;grid-template-columns:52px 1fr;gap:6px 14px;align-content:start}
+.pl .shirt{width:52px;height:52px;display:block;grid-row:span 2}
+.pl .head{min-width:0;display:grid;gap:2px;align-content:center}
 .pl .pos{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.08em;color:var(--celeste-deep);font-weight:600}
-.pl .code{font-family:var(--f-mono);font-size:.7rem;font-weight:600;letter-spacing:.06em;color:var(--celeste-deep);background:var(--chip);height:40px;display:grid;place-items:center;border-radius:3px}
-.pl b{display:block;font-weight:600;line-height:1.25}
-.pl span{font-size:.8rem;color:var(--muted)}
-.pl .tag{display:inline-block;font-family:var(--f-mono);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--sun);font-weight:600}
+.pl b{display:block;font-weight:700;line-height:1.25;font-size:1.02rem}
+.pl .club{font-size:.85rem;font-weight:600;color:var(--ink)}
+.pl .club small{font-family:var(--f-mono);font-size:.68rem;color:var(--muted);font-weight:400;margin-left:4px}
+.pl .bio{grid-column:1/-1;font-size:.88rem;color:var(--muted);line-height:1.5;padding-top:8px;border-top:1px dashed var(--line);margin-top:4px}
+.pl .tag{display:inline-block;font-family:var(--f-mono);font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;color:var(--bg);background:var(--sun);padding:0 6px;border-radius:3px;margin-left:6px;vertical-align:2px;font-weight:600}
 .out{margin-top:8px;display:grid;gap:6px}
 
 footer{margin-top:64px;border-top:1px solid var(--line)}
 footer .wrap{padding-block:28px 40px;display:grid;gap:10px;font-size:.85rem;color:var(--muted)}
-footer ul{margin:0;padding-left:18px}
 
 @media (max-width:560px){
   .timeline>li{grid-template-columns:1fr;padding-left:22px}
@@ -153,10 +161,14 @@ footer ul{margin:0;padding-left:18px}
 <nav class="top" aria-label="Sections">
   <div class="wrap">
     <a class="brand" href="#top">La Celeste</a>
-    <a class="l" href="#history">History</a>
-    <a class="l" href="#honours">Honours</a>
-    <a class="l" href="#today">Today</a>
-    <a class="l" href="#squad">Squad</a>
+    <a class="l" href="#history"><span class="en">History</span><span class="es">Historia</span></a>
+    <a class="l" href="#honours"><span class="en">Honours</span><span class="es">Palmarés</span></a>
+    <a class="l" href="#today"><span class="en">Today</span><span class="es">Hoy</span></a>
+    <a class="l" href="#squad"><span class="en">Squad</span><span class="es">Plantel</span></a>
+    <div class="lang" role="group" aria-label="Language / Idioma">
+      <button type="button" id="lang-en" data-lang="en" aria-pressed="true">EN</button>
+      <button type="button" id="lang-es" data-lang="es" aria-pressed="false">ES</button>
+    </div>
   </div>
 </nav>
 
@@ -164,23 +176,24 @@ footer ul{margin:0;padding-left:18px}
   <div class="stripes" aria-hidden="true"></div>
   <div class="wrap">
     <div>
-      <div class="stars" aria-label="Four stars on the shirt">
+      <div class="stars" aria-label="4 ★">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>
         <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>
         <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>
         <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/></svg>
       </div>
-      <p class="eyebrow">Selección Uruguaya de Fútbol · since 1901</p>
+      <p class="eyebrow"><span class="en">Selección Uruguaya de Fútbol · since 1901</span><span class="es">Selección Uruguaya de Fútbol · desde 1901</span></p>
       <h1>La<br>Celeste</h1>
-      <p class="lede">A nation of three and a half million people that won the first World Cup, silenced the Maracanã and still carries four stars on its shirt. This is Uruguay's story from Paris 1924 to the squad of today.</p>
+      <p class="lede en">A nation of three and a half million people that won the first World Cup, silenced the Maracanã and still carries four stars on its shirt. This is Uruguay's story from Paris 1924 to the squad of today.</p>
+      <p class="lede es">Un país de tres millones y medio de habitantes que ganó el primer Mundial, silenció al Maracaná y todavía lleva cuatro estrellas en la camiseta. Esta es la historia de Uruguay, desde París 1924 hasta el plantel de hoy.</p>
       <div class="facts">
-        <div><b>2</b>World Cups</div>
-        <div><b>2</b>Olympic golds</div>
-        <div><b>15</b>Copa Américas</div>
-        <div><b>15</b>World Cups played</div>
+        <div><b>2</b><span class="en">World Cups</span><span class="es">Mundiales</span></div>
+        <div><b>2</b><span class="en">Olympic golds</span><span class="es">Oros olímpicos</span></div>
+        <div><b>15</b><span class="en">Copa Américas</span><span class="es">Copas América</span></div>
+        <div><b>15</b><span class="en">World Cups played</span><span class="es">Mundiales jugados</span></div>
       </div>
     </div>
-    <svg class="sun" viewBox="0 0 200 200" role="img" aria-label="Sol de Mayo, the sun from Uruguay's flag, with eight straight and eight wavy rays">
+    <svg class="sun" viewBox="0 0 200 200" role="img" aria-label="Sol de Mayo">
       <defs>
         <path id="ray-straight" d="M100 3 L107.5 58 L92.5 58 Z"/>
         <path id="ray-wavy" d="M92 58 C84 48 99 42 93 32 C87 22 101 15 100 3 C104 15 96 23 104 32 C111 42 98 48 108 58 Z"/>
@@ -224,136 +237,154 @@ footer ul{margin:0;padding-left:18px}
 <section id="history">
   <div class="wrap">
     <div class="sec-head">
-      <p class="eyebrow">Chapter one</p>
-      <h2>A century of the sky-blue shirt</h2>
-      <p>Uruguay arrived in Europe in 1924 as unknowns and left as the best team in the world. Here are the moments that built the legend, from that first trip to Paris up to 2026.</p>
+      <p class="eyebrow"><span class="en">Chapter one</span><span class="es">Capítulo uno</span></p>
+      <h2 class="en">A century of the sky-blue shirt</h2>
+      <h2 class="es">Un siglo de camiseta celeste</h2>
+      <p class="en">Uruguay arrived in Europe in 1924 as unknowns and left as the best team in the world. Here are the moments that built the legend, from that first trip to Paris up to 2026.</p>
+      <p class="es">Uruguay llegó a Europa en 1924 como un desconocido y se fue como el mejor equipo del mundo. Estos son los momentos que construyeron la leyenda, desde aquel primer viaje a París hasta 2026.</p>
     </div>
 
     <ol class="timeline">
-      <li class="era-row"><span class="era">The golden age · 1924–1950</span></li>
+      <li class="era-row"><span class="era"><span class="en">The golden age · 1924–1950</span><span class="es">La edad de oro · 1924–1950</span></span></li>
       <li class="star">
         <span class="yr">1924</span>
         <div class="tl-body">
-          <h3>Olympic gold in Paris</h3>
-          <p>In their first tournament outside South America, Uruguay won all five matches in Paris and beat Switzerland in the final. José Leandro Andrade, Héctor Scarone and Pedro Petrone made Europe take notice. After the final the players ran a lap of the pitch to salute the crowd, and that became the first <em>vuelta olímpica</em>.</p>
-          <span class="score">Final · Uruguay 3–0 Switzerland</span>
+          <h3 class="en">Olympic gold in Paris</h3><h3 class="es">Oro olímpico en París</h3>
+          <p class="en">In their first tournament outside South America, Uruguay won all five matches in Paris and beat Switzerland in the final. José Leandro Andrade, Héctor Scarone and Pedro Petrone made Europe take notice. After the final the players ran a lap of the pitch to salute the crowd, and that became the first <em>vuelta olímpica</em>.</p>
+          <p class="es">En su primer torneo fuera de Sudamérica, Uruguay ganó los cinco partidos en París y venció a Suiza en la final. José Leandro Andrade, Héctor Scarone y Pedro Petrone deslumbraron a Europa. Tras la final, los jugadores dieron una vuelta a la cancha para saludar al público: fue la primera <em>vuelta olímpica</em>.</p>
+          <span class="score"><span class="en">Final</span><span class="es">Final</span> · Uruguay 3–0 <span class="en">Switzerland</span><span class="es">Suiza</span></span>
         </div>
       </li>
       <li class="star">
         <span class="yr">1928</span>
         <div class="tl-body">
-          <h3>Gold again in Amsterdam</h3>
-          <p>Uruguay retained the Olympic title after beating Argentina in a replayed final. FIFA treated these Olympic tournaments as world championships, which is why Uruguay counts four stars on its shirt instead of two.</p>
-          <span class="score">Final replay · Uruguay 2–1 Argentina</span>
+          <h3 class="en">Gold again in Amsterdam</h3><h3 class="es">Otra vez oro en Ámsterdam</h3>
+          <p class="en">Uruguay retained the Olympic title after beating Argentina in a replayed final. FIFA treated these Olympic tournaments as world championships, which is why Uruguay counts four stars on its shirt instead of two.</p>
+          <p class="es">Uruguay retuvo el título olímpico al ganarle a Argentina en una final de desempate. La FIFA reconoció estos torneos olímpicos como campeonatos mundiales, y por eso Uruguay lleva cuatro estrellas en la camiseta y no dos.</p>
+          <span class="score"><span class="en">Final replay</span><span class="es">Final (desempate)</span> · Uruguay 2–1 Argentina</span>
         </div>
       </li>
       <li class="star">
         <span class="yr">1930</span>
         <div class="tl-body">
-          <h3>Host and champion of the first World Cup</h3>
-          <p>Montevideo hosted the first FIFA World Cup to mark one hundred years of Uruguay's first constitution. The Estadio Centenario was built for it. Uruguay came back from 2–1 down at half-time to beat Argentina in the final, with José Nasazzi as captain.</p>
+          <h3 class="en">Host and champion of the first World Cup</h3><h3 class="es">Anfitrión y campeón del primer Mundial</h3>
+          <p class="en">Montevideo hosted the first FIFA World Cup to mark one hundred years of Uruguay's first constitution. The Estadio Centenario was built for it. Uruguay came back from 2–1 down at half-time to beat Argentina in the final, with José Nasazzi as captain.</p>
+          <p class="es">Montevideo organizó la primera Copa del Mundo para celebrar los cien años de la primera Constitución. Para la ocasión se construyó el Estadio Centenario. Uruguay dio vuelta un 1–2 del primer tiempo y le ganó la final a Argentina, con José Nasazzi como capitán.</p>
           <span class="score">Final · Uruguay 4–2 Argentina</span>
         </div>
       </li>
       <li>
         <span class="yr">1934–38</span>
         <div class="tl-body">
-          <h3>The boycott years</h3>
-          <p>Uruguay refused to travel to Italy in 1934, partly because few European nations had come to Montevideo in 1930. They stayed away from France in 1938 too. In between they kept winning in South America, taking the 1935 and 1942 Copa América titles.</p>
+          <h3 class="en">The boycott years</h3><h3 class="es">Los años del boicot</h3>
+          <p class="en">Uruguay refused to travel to Italy in 1934, partly because few European nations had come to Montevideo in 1930. They stayed away from France in 1938 too. In between they kept winning in South America, taking the 1935 and 1942 Copa América titles.</p>
+          <p class="es">Uruguay se negó a viajar a Italia en 1934, en parte porque pocas selecciones europeas habían venido a Montevideo en 1930. Tampoco fue a Francia en 1938. Mientras tanto siguió ganando en Sudamérica: Copa América en 1935 y 1942.</p>
         </div>
       </li>
       <li class="star">
         <span class="yr">1950</span>
         <div class="tl-body">
-          <h3>The Maracanazo</h3>
-          <p>In the deciding match of the World Cup in Brazil, about 200,000 people packed the Maracanã expecting a home win. Friaça put Brazil ahead, then Juan Alberto Schiaffino equalised and Alcides Ghiggia scored the winner. Captain Obdulio Varela led the team through it. It is still one of the biggest upsets in football.</p>
-          <span class="score">Final round · Brazil 1–2 Uruguay</span>
+          <h3 class="en">The Maracanazo</h3><h3 class="es">El Maracanazo</h3>
+          <p class="en">In the deciding match of the World Cup in Brazil, about 200,000 people packed the Maracanã expecting a home win. Friaça put Brazil ahead, then Juan Alberto Schiaffino equalised and Alcides Ghiggia scored the winner. Captain Obdulio Varela led the team through it. It is still one of the biggest upsets in football.</p>
+          <p class="es">En el partido decisivo del Mundial de Brasil, unas 200.000 personas llenaron el Maracaná esperando la victoria local. Friaça adelantó a Brasil, Juan Alberto Schiaffino empató y Alcides Ghiggia marcó el gol del triunfo. El capitán Obdulio Varela sostuvo al equipo. Sigue siendo una de las mayores sorpresas del fútbol.</p>
+          <span class="score"><span class="en">Final round</span><span class="es">Ronda final</span> · <span class="en">Brazil</span><span class="es">Brasil</span> 1–2 Uruguay</span>
         </div>
       </li>
 
-      <li class="era-row"><span class="era">Contenders and long waits · 1954–2006</span></li>
+      <li class="era-row"><span class="era"><span class="en">Contenders and long waits · 1954–2006</span><span class="es">Candidatos y largas esperas · 1954–2006</span></span></li>
       <li>
         <span class="yr">1954</span>
         <div class="tl-body">
-          <h3>Unbeaten until the semi-final</h3>
-          <p>Uruguay beat Scotland 7–0 and England 4–2 in Switzerland. Their first ever World Cup defeat came in a 4–2 extra-time semi-final loss to Hungary's Golden Team. They finished fourth.</p>
+          <h3 class="en">Unbeaten until the semi-final</h3><h3 class="es">Invicto hasta la semifinal</h3>
+          <p class="en">Uruguay beat Scotland 7–0 and England 4–2 in Switzerland. Their first ever World Cup defeat came in a 4–2 extra-time semi-final loss to Hungary's Golden Team. They finished fourth.</p>
+          <p class="es">En Suiza, Uruguay goleó 7–0 a Escocia y venció 4–2 a Inglaterra. Su primera derrota en la historia de los Mundiales llegó en la semifinal, 4–2 en el alargue ante la Hungría de oro. Terminó cuarto.</p>
         </div>
       </li>
       <li>
         <span class="yr">1970</span>
         <div class="tl-body">
-          <h3>Fourth in Mexico</h3>
-          <p>With Ladislao Mazurkiewicz in goal, Uruguay reached the semi-finals again and lost to Pelé's Brazil. Fourth place was their best World Cup finish for forty years.</p>
+          <h3 class="en">Fourth in Mexico</h3><h3 class="es">Cuarto en México</h3>
+          <p class="en">With Ladislao Mazurkiewicz in goal, Uruguay reached the semi-finals again and lost to Pelé's Brazil. Fourth place was their best World Cup finish for forty years.</p>
+          <p class="es">Con Ladislao Mazurkiewicz en el arco, Uruguay volvió a semifinales y perdió con el Brasil de Pelé. Ese cuarto puesto fue su mejor resultado mundialista durante cuarenta años.</p>
         </div>
       </li>
       <li>
         <span class="yr">1980–81</span>
         <div class="tl-body">
-          <h3>The Mundialito</h3>
-          <p>Uruguay hosted the Copa de Oro, a tournament of former world champions held to mark fifty years since 1930. They won it, beating Brazil 2–1 in the final at the Centenario.</p>
+          <h3 class="en">The Mundialito</h3><h3 class="es">El Mundialito</h3>
+          <p class="en">Uruguay hosted the Copa de Oro, a tournament of former world champions held to mark fifty years since 1930. They won it, beating Brazil 2–1 in the final at the Centenario.</p>
+          <p class="es">Uruguay organizó la Copa de Oro, un torneo de campeones del mundo por los cincuenta años de 1930. La ganó al vencer 2–1 a Brasil en la final del Centenario.</p>
         </div>
       </li>
       <li>
         <span class="yr">1983–95</span>
         <div class="tl-body">
-          <h3>Three more Copa Américas</h3>
-          <p>Enzo Francescoli led Uruguay to the Copa América titles of 1983, 1987 and 1995. The 1995 title was won at home, on penalties against Brazil.</p>
+          <h3 class="en">Three more Copa Américas</h3><h3 class="es">Tres Copas América más</h3>
+          <p class="en">Enzo Francescoli led Uruguay to the Copa América titles of 1983, 1987 and 1995. The 1995 title was won at home, on penalties against Brazil.</p>
+          <p class="es">Enzo Francescoli llevó a Uruguay a ganar las Copas América de 1983, 1987 y 1995. La de 1995 se ganó en casa, por penales ante Brasil.</p>
         </div>
       </li>
       <li>
         <span class="yr">2002</span>
         <div class="tl-body">
-          <h3>A comeback in Korea and Japan</h3>
-          <p>Uruguay returned to the World Cup after missing two editions. A 3–3 draw with Senegal, after trailing 3–0, was not enough to get out of the group.</p>
+          <h3 class="en">A comeback in Korea and Japan</h3><h3 class="es">El regreso en Corea y Japón</h3>
+          <p class="en">Uruguay returned to the World Cup after missing two editions. A 3–3 draw with Senegal, after trailing 3–0, was not enough to get out of the group.</p>
+          <p class="es">Uruguay volvió al Mundial tras perderse dos ediciones. El 3–3 con Senegal, después de ir perdiendo 0–3, no alcanzó para pasar de la fase de grupos.</p>
         </div>
       </li>
 
-      <li class="era-row"><span class="era">The Tabárez revival · 2006–2021</span></li>
+      <li class="era-row"><span class="era"><span class="en">The Tabárez revival · 2006–2021</span><span class="es">El proceso Tabárez · 2006–2021</span></span></li>
       <li class="star">
         <span class="yr">2010</span>
         <div class="tl-body">
-          <h3>Semi-finals in South Africa</h3>
-          <p>Óscar Washington Tabárez returned in 2006 and rebuilt the team. In 2010 Uruguay reached the semi-finals for the first time since 1970. Luis Suárez's goal-line handball against Ghana and Sebastián Abreu's chipped penalty in the shootout became famous. Diego Forlán won the Golden Ball as the tournament's best player.</p>
-          <span class="score">Finished 4th</span>
+          <h3 class="en">Semi-finals in South Africa</h3><h3 class="es">Semifinales en Sudáfrica</h3>
+          <p class="en">Óscar Washington Tabárez returned in 2006 and rebuilt the team. In 2010 Uruguay reached the semi-finals for the first time since 1970. Luis Suárez's goal-line handball against Ghana and Sebastián Abreu's chipped penalty in the shootout became famous. Diego Forlán won the Golden Ball as the tournament's best player.</p>
+          <p class="es">Óscar Washington Tabárez volvió en 2006 y reconstruyó el equipo. En 2010 Uruguay llegó a semifinales por primera vez desde 1970. La mano de Luis Suárez en la línea ante Ghana y el penal picado de Sebastián Abreu quedaron en la historia. Diego Forlán ganó el Balón de Oro como mejor jugador del torneo.</p>
+          <span class="score"><span class="en">Finished 4th</span><span class="es">Cuarto puesto</span></span>
         </div>
       </li>
       <li class="star">
         <span class="yr">2011</span>
         <div class="tl-body">
-          <h3>Copa América number fifteen</h3>
-          <p>In Argentina, Uruguay knocked out the hosts on penalties and beat Paraguay 3–0 in the final. Suárez was named player of the tournament. The win made Uruguay the most successful team in Copa América history at the time.</p>
+          <h3 class="en">Copa América number fifteen</h3><h3 class="es">La Copa América número quince</h3>
+          <p class="en">In Argentina, Uruguay knocked out the hosts on penalties and beat Paraguay 3–0 in the final. Suárez was named player of the tournament. The win made Uruguay the most successful team in Copa América history at the time.</p>
+          <p class="es">En Argentina, Uruguay eliminó al local por penales y goleó 3–0 a Paraguay en la final. Suárez fue elegido mejor jugador. Con ese título Uruguay pasó a ser, en ese momento, el máximo ganador de la Copa América.</p>
           <span class="score">Final · Uruguay 3–0 Paraguay</span>
         </div>
       </li>
       <li>
         <span class="yr">2014–18</span>
         <div class="tl-body">
-          <h3>Suárez, Cavani and Godín</h3>
-          <p>Uruguay beat England and Italy to reach the last 16 in Brazil in 2014. In Russia 2018 they won all three group games and beat Portugal before losing to France in the quarter-finals. Tabárez left in 2021 after fifteen years in charge.</p>
+          <h3 class="en">Suárez, Cavani and Godín</h3><h3 class="es">Suárez, Cavani y Godín</h3>
+          <p class="en">Uruguay beat England and Italy to reach the last 16 in Brazil in 2014. In Russia 2018 they won all three group games and beat Portugal before losing to France in the quarter-finals. Tabárez left in 2021 after fifteen years in charge.</p>
+          <p class="es">En Brasil 2014, Uruguay venció a Inglaterra e Italia y llegó a octavos. En Rusia 2018 ganó los tres partidos de grupo y eliminó a Portugal antes de caer con Francia en cuartos. Tabárez se fue en 2021, tras quince años en el cargo.</p>
         </div>
       </li>
 
-      <li class="era-row"><span class="era">A new generation · 2022–today</span></li>
+      <li class="era-row"><span class="era"><span class="en">A new generation · 2022–today</span><span class="es">Una nueva generación · 2022–hoy</span></span></li>
       <li>
         <span class="yr">2022</span>
         <div class="tl-body">
-          <h3>Out on goals scored in Qatar</h3>
-          <p>Under Diego Alonso, Uruguay beat Ghana 2–0 but went out of the group behind South Korea on goals scored. It was the last World Cup for Suárez, Cavani and Godín.</p>
+          <h3 class="en">Out on goals scored in Qatar</h3><h3 class="es">Eliminado por goles en Catar</h3>
+          <p class="en">Under Diego Alonso, Uruguay beat Ghana 2–0 but went out of the group behind South Korea on goals scored. It was the last World Cup for Suárez, Cavani and Godín.</p>
+          <p class="es">Con Diego Alonso, Uruguay le ganó 2–0 a Ghana pero quedó afuera en la fase de grupos detrás de Corea del Sur por goles a favor. Fue el último Mundial de Suárez, Cavani y Godín.</p>
         </div>
       </li>
       <li>
         <span class="yr">2023–24</span>
         <div class="tl-body">
-          <h3>Bielsa arrives</h3>
-          <p>Marcelo Bielsa was appointed in 2023. His high-pressing team beat Brazil and Argentina in qualifying. At the 2024 Copa América in the United States, Uruguay knocked out Brazil on penalties and finished third.</p>
+          <h3 class="en">Bielsa arrives</h3><h3 class="es">Llega Bielsa</h3>
+          <p class="en">Marcelo Bielsa was appointed in 2023. His high-pressing team beat Brazil and Argentina in qualifying. At the 2024 Copa América in the United States, Uruguay knocked out Brazil on penalties and finished third.</p>
+          <p class="es">Marcelo Bielsa asumió en 2023. Su equipo de presión alta les ganó a Brasil y Argentina en las Eliminatorias. En la Copa América 2024 en Estados Unidos, Uruguay eliminó a Brasil por penales y terminó tercero.</p>
         </div>
       </li>
       <li>
         <span class="yr">2026</span>
         <div class="tl-body">
-          <h3>Early exit in North America</h3>
-          <p>Uruguay were drawn in Group H with Spain, Saudi Arabia and Cape Verde. They drew twice and lost 1–0 to Spain in Guadalajara on 26 June, going out without a win. It was their earliest exit since 2002, and Bielsa resigned. Diego Forlán was named interim coach in July.</p>
-          <span class="score">Group H · W0 D2 L1</span>
+          <h3 class="en">Early exit, then a fresh start</h3><h3 class="es">Eliminación temprana y un nuevo comienzo</h3>
+          <p class="en">Uruguay were drawn in Group H with Spain, Saudi Arabia and Cape Verde. They drew twice and lost 1–0 to Spain in Guadalajara on 26 June, going out without a win. It was their earliest exit since 2002, and Bielsa resigned. Diego Forlán was named interim coach and, in November, led the team to a 2–1 win over Argentina at La Bombonera and a 5–0 win over the Dominican Republic.</p>
+          <p class="es">Uruguay integró el Grupo H con España, Arabia Saudita y Cabo Verde. Empató dos partidos y perdió 1–0 con España en Guadalajara el 26 de junio, y quedó afuera sin ganar. Fue su peor Mundial desde 2002 y Bielsa renunció. Diego Forlán asumió como técnico interino y en noviembre ganó 2–1 a Argentina en La Bombonera y 5–0 a República Dominicana.</p>
+          <span class="score"><span class="en">World Cup Group H</span><span class="es">Mundial, Grupo H</span> · <span class="en">W0 D2 L1</span><span class="es">G0 E2 P1</span></span>
         </div>
       </li>
     </ol>
@@ -363,22 +394,25 @@ footer ul{margin:0;padding-left:18px}
 <section id="honours">
   <div class="wrap">
     <div class="sec-head">
-      <p class="eyebrow">Chapter two</p>
-      <h2>Honours &amp; records</h2>
-      <p>The trophy cabinet of a small country with a big footballing past. Years shaded blue are from 1924 onwards.</p>
+      <p class="eyebrow"><span class="en">Chapter two</span><span class="es">Capítulo dos</span></p>
+      <h2 class="en">Honours &amp; records</h2><h2 class="es">Palmarés y récords</h2>
+      <p class="en">The trophy cabinet of a small country with a big footballing past. Years shaded blue are from 1924 onwards.</p>
+      <p class="es">Las vitrinas de un país chico con una enorme historia futbolera. Los años sombreados en celeste son de 1924 en adelante.</p>
     </div>
     <div class="honours">
       <div class="hon">
-        <p class="eyebrow">FIFA World Cup</p>
+        <p class="eyebrow"><span class="en">FIFA World Cup</span><span class="es">Copa Mundial de la FIFA</span></p>
         <span class="n">2</span>
         <div class="years"><span class="post">1930</span><span class="post">1950</span></div>
-        <p class="note">Also 4th place in 1954, 1970 and 2010.</p>
+        <p class="note en">Also 4th place in 1954, 1970 and 2010.</p>
+        <p class="note es">Además, cuarto puesto en 1954, 1970 y 2010.</p>
       </div>
       <div class="hon">
-        <p class="eyebrow">Olympic football</p>
+        <p class="eyebrow"><span class="en">Olympic football</span><span class="es">Fútbol olímpico</span></p>
         <span class="n">2</span>
         <div class="years"><span class="post">1924</span><span class="post">1928</span></div>
-        <p class="note">Recognised by FIFA as world championships, so they add two stars above the crest.</p>
+        <p class="note en">Recognised by FIFA as world championships, so they add two stars above the crest.</p>
+        <p class="note es">Reconocidos por la FIFA como campeonatos mundiales, por eso suman dos estrellas sobre el escudo.</p>
       </div>
       <div class="hon">
         <p class="eyebrow">Copa América</p>
@@ -389,15 +423,16 @@ footer ul{margin:0;padding-left:18px}
           <span class="post">1956</span><span class="post">1959</span><span class="post">1967</span><span class="post">1983</span>
           <span class="post">1987</span><span class="post">1995</span><span class="post">2011</span>
         </div>
-        <p class="note">Includes the 1959 extra tournament held in Ecuador.</p>
+        <p class="note en">Includes the 1959 extra tournament held in Ecuador.</p>
+        <p class="note es">Incluye el torneo extra de 1959 disputado en Ecuador.</p>
       </div>
     </div>
 
     <div class="recs">
       <div class="tbox">
-        <h3>All-time top scorers</h3>
+        <h3 class="en">All-time top scorers</h3><h3 class="es">Máximos goleadores</h3>
         <table>
-          <thead><tr><th>Player</th><th>Years</th><th style="text-align:right">Goals</th></tr></thead>
+          <thead><tr><th><span class="en">Player</span><span class="es">Jugador</span></th><th><span class="en">Years</span><span class="es">Años</span></th><th class="num"><span class="en">Goals</span><span class="es">Goles</span></th></tr></thead>
           <tbody>
             <tr><td>Luis Suárez</td><td>2007–2024</td><td class="num">69</td></tr>
             <tr><td>Edinson Cavani</td><td>2008–2022</td><td class="num">58</td></tr>
@@ -408,20 +443,22 @@ footer ul{margin:0;padding-left:18px}
         </table>
       </div>
       <div class="tbox">
-        <h3>Most appearances</h3>
+        <h3 class="en">Most appearances</h3><h3 class="es">Más partidos jugados</h3>
         <table>
-          <thead><tr><th>Player</th><th>Years</th><th style="text-align:right">Caps</th></tr></thead>
+          <thead><tr><th><span class="en">Player</span><span class="es">Jugador</span></th><th><span class="en">Years</span><span class="es">Años</span></th><th class="num"><span class="en">Caps</span><span class="es">Partidos</span></th></tr></thead>
           <tbody>
             <tr><td>Diego Godín</td><td>2005–2022</td><td class="num">161</td></tr>
             <tr><td>Luis Suárez</td><td>2007–2024</td><td class="num">143</td></tr>
             <tr><td>Edinson Cavani</td><td>2008–2022</td><td class="num">136</td></tr>
           </tbody>
         </table>
-        <p class="note" style="margin-top:10px">Fernando Muslera, the long-time goalkeeper, also passed 130 caps and played at the 2026 World Cup.</p>
+        <p class="note en" style="margin-top:10px">Fernando Muslera, the long-time goalkeeper, also passed 130 caps and played at the 2026 World Cup.</p>
+        <p class="note es" style="margin-top:10px">Fernando Muslera, arquero durante muchos años, también superó los 130 partidos y jugó el Mundial 2026.</p>
       </div>
       <div class="tbox">
-        <h3>Home ground</h3>
-        <p><b>Estadio Centenario</b>, Montevideo. Built for the 1930 World Cup and named after the centenary of the constitution. FIFA has called it a historic monument of world football. Its Torre de los Homenajes is one of the best-known sights in the city.</p>
+        <h3 class="en">Home ground</h3><h3 class="es">La casa de la Celeste</h3>
+        <p class="en"><b>Estadio Centenario</b>, Montevideo. Built for the 1930 World Cup and named after the centenary of the constitution. FIFA has called it a historic monument of world football. Its Torre de los Homenajes is one of the best-known sights in the city.</p>
+        <p class="es"><b>Estadio Centenario</b>, Montevideo. Construido para el Mundial de 1930 y nombrado por el centenario de la Constitución. La FIFA lo declaró monumento histórico del fútbol mundial. Su Torre de los Homenajes es una de las imágenes más conocidas de la ciudad.</p>
       </div>
     </div>
   </div>
@@ -430,33 +467,36 @@ footer ul{margin:0;padding-left:18px}
 <section id="today">
   <div class="wrap">
     <div class="sec-head">
-      <p class="eyebrow">Chapter three</p>
-      <h2>The team today</h2>
-      <p>After the 2026 World Cup, Uruguay began rebuilding under one of the heroes of 2010. These are the latest results and news as of November 2026.</p>
+      <p class="eyebrow"><span class="en">Chapter three</span><span class="es">Capítulo tres</span></p>
+      <h2 class="en">The team today</h2><h2 class="es">La selección hoy</h2>
+      <p class="en">After the 2026 World Cup, Uruguay began rebuilding under one of the heroes of 2010. These are the latest results and news as of November 2026.</p>
+      <p class="es">Después del Mundial 2026, Uruguay empezó a reconstruirse con uno de los héroes de 2010. Estos son los últimos resultados y novedades a noviembre de 2026.</p>
     </div>
     <div class="today">
       <div class="panel">
-        <p class="eyebrow">Head coach (interim)</p>
+        <p class="eyebrow"><span class="en">Head coach (interim)</span><span class="es">Director técnico (interino)</span></p>
         <h3>Diego Forlán</h3>
-        <p>The 2010 Golden Ball winner and Uruguay's third-highest scorer took charge in summer 2026 after Marcelo Bielsa resigned. His contract as interim coach runs to March 2027, and he also coaches the Under-20 team ahead of the 2027 South American U-20 Championship. Before this, he coached Peñarol in 2020 and Atenas in 2021.</p>
-        <p class="note">The federation (AUF) has not yet named a permanent coach.</p>
+        <p class="en">The 2010 Golden Ball winner and Uruguay's third-highest scorer took charge in summer 2026 after Marcelo Bielsa resigned. His contract as interim coach runs to March 2027, and he also coaches the Under-20 team ahead of the 2027 South American U-20 Championship. Before this, he coached Peñarol in 2020 and Atenas in 2021.</p>
+        <p class="es">El Balón de Oro de 2010 y tercer máximo goleador de la historia celeste asumió a mediados de 2026 tras la renuncia de Marcelo Bielsa. Su contrato como interino va hasta marzo de 2027 y también dirige la Sub-20 rumbo al Sudamericano Sub-20 de 2027. Antes dirigió a Peñarol en 2020 y a Atenas en 2021.</p>
+        <p class="note en">The federation (AUF) has not yet named a permanent coach.</p>
+        <p class="note es">La AUF todavía no designó un técnico definitivo.</p>
       </div>
       <div class="panel">
-        <p class="eyebrow">Recent matches</p>
+        <p class="eyebrow"><span class="en">Recent matches</span><span class="es">Últimos partidos</span></p>
         <div class="match">
-          <span class="res L" aria-label="Loss">L</span>
-          <div class="m-t"><b>Spain v Uruguay</b><span>World Cup, Group H · 26 Jun 2026 · Guadalajara</span></div>
+          <span class="res L" aria-label="L">L</span>
+          <div class="m-t"><b><span class="en">Spain v Uruguay</span><span class="es">España vs. Uruguay</span></b><span><span class="en">World Cup, Group H · 26 Jun 2026 · Guadalajara</span><span class="es">Mundial, Grupo H · 26 jun 2026 · Guadalajara</span></span></div>
           <span class="sc">1–0</span>
         </div>
         <div class="match">
-          <span class="res W" aria-label="Win">W</span>
-          <div class="m-t"><b>Argentina v Uruguay</b><span>Friendly · 13 Nov 2026 · La Bombonera. Balerdi own goal, Maxi Araújo</span></div>
+          <span class="res W" aria-label="W">W</span>
+          <div class="m-t"><b><span class="en">Argentina v Uruguay</span><span class="es">Argentina vs. Uruguay</span></b><span><span class="en">Friendly · 13 Nov 2026 · La Bombonera. Balerdi own goal, Maxi Araújo</span><span class="es">Amistoso · 13 nov 2026 · La Bombonera. Goles: Balerdi (en contra), Maxi Araújo</span></span></div>
           <span class="sc">1–2</span>
         </div>
         <div class="match">
-          <span class="res U" aria-label="Result not listed">?</span>
-          <div class="m-t"><b>Uruguay v Dominican Republic</b><span>Friendly · 17 Nov 2026 · Maldonado</span></div>
-          <span class="sc">TBC</span>
+          <span class="res W" aria-label="W">W</span>
+          <div class="m-t"><b><span class="en">Uruguay v Dominican Republic</span><span class="es">Uruguay vs. República Dominicana</span></b><span><span class="en">Friendly · 17 Nov 2026 · Maldonado</span><span class="es">Amistoso · 17 nov 2026 · Maldonado</span></span></div>
+          <span class="sc">5–0</span>
         </div>
       </div>
     </div>
@@ -466,25 +506,31 @@ footer ul{margin:0;padding-left:18px}
 <section id="squad">
   <div class="wrap">
     <div class="sec-head">
-      <p class="eyebrow">Chapter four</p>
-      <h2>The squad</h2>
-      <p>The 28 players Diego Forlán called up on 6 November 2026 for the friendlies against Argentina and the Dominican Republic. Each shirt shows the number the player wore against Argentina on 13 November. A dash means he wasn't in that matchday squad. Filter by position below.</p>
+      <p class="eyebrow"><span class="en">Chapter four</span><span class="es">Capítulo cuatro</span></p>
+      <h2 class="en">The squad</h2><h2 class="es">El plantel</h2>
+      <p class="en">The 28 players Diego Forlán called up on 6 November 2026 for the friendlies against Argentina and the Dominican Republic. Each shirt shows the number the player wore against Argentina on 13 November. A dash means he wasn't in that matchday squad.</p>
+      <p class="es">Los 28 jugadores que Diego Forlán convocó el 6 de noviembre de 2026 para los amistosos ante Argentina y República Dominicana. Cada camiseta muestra el número que usó el jugador ante Argentina el 13 de noviembre. Un guion indica que no estuvo entre los convocados de ese partido.</p>
     </div>
-    <div class="filters" role="group" aria-label="Filter by position">
-      <button type="button" id="f-all" data-f="all" aria-pressed="true">All 28</button>
-      <button type="button" id="f-gk" data-f="GK" aria-pressed="false">Goalkeepers</button>
-      <button type="button" id="f-df" data-f="DF" aria-pressed="false">Defenders</button>
-      <button type="button" id="f-mf" data-f="MF" aria-pressed="false">Midfielders</button>
-      <button type="button" id="f-fw" data-f="FW" aria-pressed="false">Forwards</button>
+    <div class="filters" role="group" aria-label="Filter">
+      <button type="button" id="f-all" data-f="all" aria-pressed="true"><span class="en">All 28</span><span class="es">Los 28</span></button>
+      <button type="button" id="f-gk" data-f="GK" aria-pressed="false"><span class="en">Goalkeepers</span><span class="es">Arqueros</span></button>
+      <button type="button" id="f-df" data-f="DF" aria-pressed="false"><span class="en">Defenders</span><span class="es">Defensas</span></button>
+      <button type="button" id="f-mf" data-f="MF" aria-pressed="false"><span class="en">Midfielders</span><span class="es">Mediocampistas</span></button>
+      <button type="button" id="f-fw" data-f="FW" aria-pressed="false"><span class="en">Forwards</span><span class="es">Delanteros</span></button>
     </div>
     <div id="squad-list"></div>
 
     <div class="panel" style="margin-top:8px">
-      <p class="eyebrow">Not in this squad</p>
-      <div class="out">
+      <p class="eyebrow"><span class="en">Not in this squad</span><span class="es">No convocados</span></p>
+      <div class="out en">
         <p><b>Injured:</b> Manuel Ugarte, Nahitan Nández and Brian Rodríguez.</p>
         <p><b>Club duty:</b> Miguel Merentiel stayed with Boca Juniors for the Copa Sudamericana final on 21 November.</p>
         <p><b>Retired from the national team:</b> Luis Suárez, Edinson Cavani and Diego Godín.</p>
+      </div>
+      <div class="out es">
+        <p><b>Lesionados:</b> Manuel Ugarte, Nahitan Nández y Brian Rodríguez.</p>
+        <p><b>Compromiso con su club:</b> Miguel Merentiel se quedó en Boca Juniors por la final de la Copa Sudamericana del 21 de noviembre.</p>
+        <p><b>Retirados de la selección:</b> Luis Suárez, Edinson Cavani y Diego Godín.</p>
       </div>
     </div>
   </div>
@@ -493,82 +539,176 @@ footer ul{margin:0;padding-left:18px}
 
 <footer>
   <div class="wrap">
-    <p>Facts current to 21 November 2026. Squad and match details come from news reports by La Nación, beIN Sports, Infobae and other outlets. Clubs are left out because players change teams often.</p>
+    <p class="en">Facts current to 21 November 2026. Squad, clubs and match details come from news reports by La Nación, El Observador, La Diaria, beIN Sports, Infobae, Sky Sports and ESPN.</p>
+    <p class="es">Datos actualizados al 21 de noviembre de 2026. Plantel, clubes y partidos según La Nación, El Observador, La Diaria, beIN Sports, Infobae, Sky Sports y ESPN.</p>
   </div>
 </footer>
 
 <script>
+// [position, name, club, country code, bio EN, bio ES, first call-up?]
 const squad = [
-  ["GK","Cristopher Fiermarín",""],
-  ["GK","Ignacio de Arruabarrena",""],
-  ["GK","Sebastián Jaume","First call-up"],
-  ["GK","Santiago Mele",""],
-  ["DF","Guillermo Varela",""],
-  ["DF","Santiago Mouriño",""],
-  ["DF","Sebastián Cáceres",""],
-  ["DF","Ronald Araújo","Centre-back"],
-  ["DF","José María Giménez","Centre-back, veteran leader"],
-  ["DF","Mathías Olivera",""],
-  ["DF","Juan Rodríguez",""],
-  ["DF","Joaquín Piquerez","Left-back"],
-  ["DF","Juan Manuel Sanabria",""],
-  ["MF","Rodrigo Bentancur",""],
-  ["MF","Facundo Bernal",""],
-  ["MF","Lucas Torreira",""],
-  ["MF","Nicolás de la Cruz",""],
-  ["MF","Federico Valverde","Star midfielder, back from injury"],
-  ["MF","Rodrigo Zalazar",""],
-  ["MF","Giorgian de Arrascaeta","Playmaker"],
-  ["MF","Agustín Canobbio",""],
-  ["FW","Facundo Pellistri",""],
-  ["FW","Maximiliano Araújo","Scored at La Bombonera"],
-  ["FW","Martín Satriano",""],
-  ["FW","Rodrigo Aguirre",""],
-  ["FW","Federico Viñas",""],
-  ["FW","Bruno Damiani","First call-up"],
-  ["FW","Darwin Núñez","Centre-forward"]
+  ["GK","Cristopher Fiermarín","Atlético Bucaramanga","COL",
+   "Started in goal in the 2–1 win over Argentina at La Bombonera. Plays his club football in Colombia.",
+   "Fue titular en el arco en el triunfo 2–1 ante Argentina en La Bombonera. Juega en el fútbol colombiano."],
+  ["GK","Ignacio de Arruabarrena","Arouca","POR",
+   "Goalkeeper playing in Portugal's top division with Arouca.",
+   "Arquero que juega en la primera división de Portugal con el Arouca."],
+  ["GK","Sebastián Jaume","Albion","URU",
+   "The surprise of the list. He impressed in his first top-flight season with Albion and is the only player in the squad from the Uruguayan league.",
+   "La sorpresa de la lista. Se destacó en su primera temporada en Primera con Albion y es el único jugador del plantel que juega en la liga uruguaya.",true],
+  ["GK","Santiago Mele","Independiente","ARG",
+   "Experienced goalkeeper who has been part of recent national team squads. Wore the No. 1 shirt on the bench at La Bombonera.",
+   "Arquero con experiencia en los últimos procesos de la selección. Fue el número 1 en el banco en La Bombonera."],
+  ["DF","Guillermo Varela","Flamengo","BRA",
+   "Right-back and a Copa Libertadores winner with Flamengo. Started against Argentina.",
+   "Lateral derecho, campeón de la Copa Libertadores con Flamengo. Fue titular ante Argentina."],
+  ["DF","Santiago Mouriño","Villarreal","ESP",
+   "Centre-back who came through Racing de Montevideo and now plays in La Liga.",
+   "Zaguero formado en Racing de Montevideo que hoy juega en LaLiga."],
+  ["DF","Sebastián Cáceres","Celta de Vigo","ESP",
+   "Centre-back who spent several seasons with Club América in Mexico before moving to Spain.",
+   "Zaguero que pasó varias temporadas en el Club América de México antes de llegar a España."],
+  ["DF","Ronald Araújo","Liverpool","ENG",
+   "Powerful centre-back who made his name at Barcelona. He is on a season-long loan at Liverpool with an option to buy.",
+   "Zaguero potente que se consagró en el Barcelona. Juega a préstamo por una temporada en el Liverpool, con opción de compra."],
+  ["DF","José María Giménez","Deportivo La Coruña","ESP",
+   "A veteran leader of the defence. He spent more than a decade at Atlético Madrid, winning La Liga twice, and is on loan at Deportivo until June 2027.",
+   "Referente de la defensa. Pasó más de una década en el Atlético de Madrid, donde ganó dos Ligas, y está a préstamo en el Deportivo hasta junio de 2027."],
+  ["DF","Mathías Olivera","Napoli","ITA",
+   "Left-back who has won Serie A twice with Napoli. Started against Argentina.",
+   "Lateral izquierdo, dos veces campeón de la Serie A con el Napoli. Fue titular ante Argentina."],
+  ["DF","Juan Rodríguez","Cagliari","ITA",
+   "Young centre-back, born in 2005, playing in Serie A.",
+   "Joven zaguero nacido en 2005 que juega en la Serie A."],
+  ["DF","Joaquín Piquerez","Palmeiras","BRA",
+   "Attacking left-back and two-time Brazilian champion with Palmeiras.",
+   "Lateral izquierdo de vocación ofensiva, dos veces campeón brasileño con Palmeiras."],
+  ["DF","Juan Manuel Sanabria","Real Salt Lake","USA",
+   "Versatile defender who plays in Major League Soccer.",
+   "Defensor polifuncional que juega en la MLS de Estados Unidos."],
+  ["MF","Rodrigo Bentancur","Tottenham Hotspur","ENG",
+   "Captain against Argentina. A former Juventus midfielder, he won the Europa League with Tottenham in 2025.",
+   "Capitán ante Argentina. Ex Juventus, ganó la Europa League con el Tottenham en 2025."],
+  ["MF","Facundo Bernal","Real Betis","ESP",
+   "Young defensive midfielder playing in La Liga.",
+   "Joven mediocampista de contención que juega en LaLiga."],
+  ["MF","Lucas Torreira","Galatasaray","TUR",
+   "Tireless holding midfielder. He has played for Arsenal and Atlético Madrid and won several Turkish league titles with Galatasaray.",
+   "Volante incansable. Jugó en Arsenal y Atlético de Madrid y ganó varias ligas turcas con el Galatasaray."],
+  ["MF","Nicolás de la Cruz","Flamengo","BRA",
+   "Creative midfielder who won the Copa Libertadores with River Plate in 2018 and with Flamengo in 2025.",
+   "Volante creativo, campeón de la Copa Libertadores con River Plate en 2018 y con Flamengo en 2025."],
+  ["MF","Federico Valverde","Real Madrid","ESP",
+   "The team's biggest star. A box-to-box midfielder who won the Champions League with Real Madrid in 2022 and 2024. Came off the bench at La Bombonera after recovering from injury.",
+   "La gran figura del equipo. Mediocampista de ida y vuelta, ganó la Champions League con el Real Madrid en 2022 y 2024. Entró desde el banco en La Bombonera tras recuperarse de una lesión."],
+  ["MF","Rodrigo Zalazar","Sporting CP","POR",
+   "Attacking midfielder who made his name at Braga in Portugal. Son of former Uruguay international José Zalazar.",
+   "Mediapunta que se hizo conocido en el Braga de Portugal. Es hijo del exjugador de la selección José Zalazar."],
+  ["MF","Giorgian de Arrascaeta","Flamengo","BRA",
+   "The team's playmaker and wearer of the No. 10. A Flamengo idol with several Copa Libertadores titles.",
+   "El enganche del equipo y dueño de la 10. Ídolo de Flamengo con varias Copas Libertadores."],
+  ["MF","Agustín Canobbio","Fluminense","BRA",
+   "Hard-working wide midfielder, formerly of Peñarol and Athletico Paranaense. Started against Argentina.",
+   "Volante por la banda, muy sacrificado, ex Peñarol y Athletico Paranaense. Fue titular ante Argentina."],
+  ["FW","Facundo Pellistri","Panathinaikos","GRE",
+   "Fast winger who came through Peñarol and played for Manchester United before moving to Greece.",
+   "Extremo veloz surgido en Peñarol que jugó en el Manchester United antes de pasar a Grecia."],
+  ["FW","Maximiliano Araújo","Sporting CP","POR",
+   "Left-sided attacker who scored the winner at La Bombonera. He previously starred for Toluca in Mexico.",
+   "Atacante por izquierda que marcó el gol del triunfo en La Bombonera. Antes se destacó en el Toluca de México."],
+  ["FW","Martín Satriano","Getafe","ESP",
+   "Tall centre-forward who started at Nacional and spent several years in the Inter Milan system.",
+   "Centrodelantero alto, formado en Nacional, que pasó varios años en la estructura del Inter de Milán."],
+  ["FW","Rodrigo Aguirre","Tigres UANL","MEX",
+   "Striker who has played across South America and Mexico, including a spell at Club América.",
+   "Delantero con pasado en Sudamérica y México, incluido un paso por el Club América."],
+  ["FW","Federico Viñas","Toluca","MEX",
+   "Physical centre-forward who made his name in Mexican football with Club América and León.",
+   "Centrodelantero físico que se hizo conocido en el fútbol mexicano con América y León."],
+  ["FW","Bruno Damiani","Philadelphia Union","USA",
+   "First call-up to the senior team. A striker who came through Nacional and now plays in MLS.",
+   "Primera convocatoria a la selección mayor. Delantero formado en Nacional que hoy juega en la MLS.",true],
+  ["FW","Darwin Núñez","Al-Diriyah","KSA",
+   "Powerful centre-forward, formerly of Benfica and Liverpool. He is on a season-long loan from Al-Hilal in Saudi Arabia.",
+   "Centrodelantero potente, ex Benfica y Liverpool. Juega a préstamo por una temporada desde el Al-Hilal de Arabia Saudita."]
 ];
-const names = {GK:"Goalkeepers",DF:"Defenders",MF:"Midfielders",FW:"Forwards"};
+const posNames = {
+  en:{GK:"Goalkeepers",DF:"Defenders",MF:"Midfielders",FW:"Forwards"},
+  es:{GK:"Arqueros",DF:"Defensas",MF:"Mediocampistas",FW:"Delanteros"}
+};
+const posOne = {
+  en:{GK:"GOALKEEPER",DF:"DEFENDER",MF:"MIDFIELDER",FW:"FORWARD"},
+  es:{GK:"ARQUERO",DF:"DEFENSA",MF:"MEDIOCAMPISTA",FW:"DELANTERO"}
+};
 // Shirt numbers worn v Argentina, 13 Nov 2026 (ESPN / Sky Sports / Footyroom line-ups). Players not in that matchday squad had no number.
 const numbers = {"Santiago Mele":1,"José María Giménez":2,"Sebastián Cáceres":3,"Ronald Araújo":4,"Facundo Bernal":5,"Rodrigo Bentancur":6,"Nicolás de la Cruz":7,"Federico Valverde":8,"Darwin Núñez":9,"Giorgian de Arrascaeta":10,"Facundo Pellistri":11,"Guillermo Varela":13,"Lucas Torreira":14,"Santiago Mouriño":15,"Mathías Olivera":16,"Rodrigo Zalazar":17,"Rodrigo Aguirre":18,"Agustín Canobbio":19,"Maximiliano Araújo":20,"Federico Viñas":21,"Joaquín Piquerez":22,"Cristopher Fiermarín":23,"Juan Manuel Sanabria":25,"Martín Satriano":26};
+
 const list = document.getElementById("squad-list");
-function render(f){
+let lang = "en";
+let current = "all";
+
+function shirt(pos, num){
+  const gk = pos === "GK";
+  const label = num ?? "–";
+  return `<svg class="shirt" viewBox="0 0 52 52" aria-hidden="true"><path d="M17 5 L9 9 L2 18 L9 24 L12 21 L12 48 L40 48 L40 21 L43 24 L50 18 L43 9 L35 5 Q26 12 17 5 Z" fill="${gk ? '#2b2b2b' : '#5aa9e6'}" stroke="${gk ? '#111' : '#1f6fb2'}" stroke-width="1.5" stroke-linejoin="round"/><path d="M17 5 Q26 12 35 5" fill="none" stroke="${gk ? '#fcd116' : '#ffffff'}" stroke-width="2.5"/><text x="26" y="35" text-anchor="middle" font-family="Big Shoulders Display, Arial Narrow, sans-serif" font-weight="900" font-size="${num ? 19 : 17}" fill="${gk ? '#fcd116' : '#ffffff'}">${label}</text></svg>`;
+}
+
+function render(){
   list.innerHTML = "";
-  Object.keys(names).filter(p => f==="all" || p===f).forEach(p => {
-    const ps = squad.filter(s => s[0]===p);
+  const newLabel = lang === "es" ? "Nuevo" : "New";
+  Object.keys(posNames.en).filter(p => current === "all" || p === current).forEach(p => {
+    const ps = squad.filter(s => s[0] === p).sort((a,b) => (numbers[a[1]] ?? 99) - (numbers[b[1]] ?? 99));
     const g = document.createElement("div");
     g.className = "pos-group";
-    g.innerHTML = `<h3>${names[p]} <small>${ps.length} PLAYERS</small></h3>`;
+    g.innerHTML = `<h3>${posNames[lang][p]} <small>${ps.length} ${lang === "es" ? "JUGADORES" : "PLAYERS"}</small></h3>`;
     const grid = document.createElement("div");
     grid.className = "players";
-    ps.sort((a,b) => (numbers[a[1]] ?? 99) - (numbers[b[1]] ?? 99));
-    ps.forEach(([pos,name,note]) => {
-      const el = document.createElement("div");
+    ps.forEach(([pos,name,club,cc,bioEn,bioEs,isNew]) => {
+      const el = document.createElement("article");
       el.className = "pl";
-      const isNew = note === "First call-up";
-      const num = numbers[name];
-      const ini = num ?? "–";
-      const gk = pos === "GK";
-      const shirt = `<svg class="shirt" viewBox="0 0 52 52" aria-hidden="true"><path d="M17 5 L9 9 L2 18 L9 24 L12 21 L12 48 L40 48 L40 21 L43 24 L50 18 L43 9 L35 5 Q26 12 17 5 Z" fill="${gk ? '#2b2b2b' : '#5aa9e6'}" stroke="${gk ? '#111' : '#1f6fb2'}" stroke-width="1.5" stroke-linejoin="round"/><path d="M17 5 Q26 12 35 5" fill="none" stroke="${gk ? '#fcd116' : '#ffffff'}" stroke-width="2.5"/><text x="26" y="35" text-anchor="middle" font-family="Big Shoulders Display, Arial Narrow, sans-serif" font-weight="900" font-size="${num ? 19 : 17}" fill="${gk ? '#fcd116' : '#ffffff'}">${ini}</text></svg>`;
-      el.innerHTML = `${shirt}<div><span class="pos">${names[pos].slice(0,-1).toUpperCase()}</span><b>${name}</b>${isNew ? '<span class="tag">New</span>' : (note ? `<span>${note}</span>` : '')}</div>`;
+      el.innerHTML = `${shirt(pos, numbers[name])}
+        <div class="head">
+          <span class="pos">${posOne[lang][pos]}</span>
+          <b>${name}${isNew ? `<span class="tag">${newLabel}</span>` : ""}</b>
+          <span class="club">${club}<small>${cc}</small></span>
+        </div>
+        <p class="bio">${lang === "es" ? bioEs : bioEn}</p>`;
       grid.appendChild(el);
     });
     g.appendChild(grid);
     list.appendChild(g);
   });
 }
-let current = "all";
-try { const s = localStorage.getItem("celeste-filter"); if (s && (s==="all" || names[s])) current = s; } catch(e){}
+
+function setLang(l){
+  lang = l === "es" ? "es" : "en";
+  document.documentElement.classList.toggle("lang-es", lang === "es");
+  document.documentElement.lang = lang;
+  document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === lang ? "true" : "false"));
+  render();
+  try { localStorage.setItem("celeste-lang", lang); } catch(e){}
+}
+
+try { const s = localStorage.getItem("celeste-filter"); if (s && (s === "all" || posNames.en[s])) current = s; } catch(e){}
 document.querySelectorAll(".filters button").forEach(b => {
-  b.setAttribute("aria-pressed", b.dataset.f===current ? "true" : "false");
+  b.setAttribute("aria-pressed", b.dataset.f === current ? "true" : "false");
   b.addEventListener("click", () => {
     current = b.dataset.f;
-    document.querySelectorAll(".filters button").forEach(x => x.setAttribute("aria-pressed", x===b ? "true" : "false"));
-    render(current);
+    document.querySelectorAll(".filters button").forEach(x => x.setAttribute("aria-pressed", x === b ? "true" : "false"));
+    render();
     try { localStorage.setItem("celeste-filter", current); } catch(e){}
   });
 });
-render(current);
+document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => setLang(b.dataset.lang)));
+
+let startLang = "en";
+if (location.hash === "#es") startLang = "es";
+else if (location.hash === "#en") startLang = "en";
+else {
+  try { const s = localStorage.getItem("celeste-lang"); if (s) startLang = s; } catch(e){}
+}
+window.addEventListener("hashchange", () => { if (location.hash === "#es" || location.hash === "#en") setLang(location.hash.slice(1)); });
+setLang(startLang);
 </script>
 </body>
 </html>
